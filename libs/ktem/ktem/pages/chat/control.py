@@ -23,9 +23,9 @@ def is_conv_name_valid(name):
     """Check if the conversation name is valid"""
     errors = []
     if len(name) == 0:
-        errors.append("Name cannot be empty")
+        errors.append("Name darf nicht leer sein")
     elif len(name) > 40:
-        errors.append("Name cannot be longer than 40 characters")
+        errors.append("Name darf nicht länger als 40 Zeichen sein")
 
     return "; ".join(errors)
 
@@ -39,7 +39,7 @@ class ConversationControl(BasePage):
 
     def on_building_ui(self):
         with gr.Row():
-            gr.Markdown("## Conversations")
+            gr.Markdown("## Konversationen")
             self.btn_toggle_dark_mode = gr.Button(
                 value="",
                 icon=f"{ASSETS_DIR}/dark_mode.svg",
@@ -101,12 +101,12 @@ class ConversationControl(BasePage):
                 elem_classes=["no-background", "body-text-color"],
             )
             self.cb_is_public = gr.Checkbox(
-                value=False, label="Shared", min_width=10, scale=4
+                value=False, label="Geteilt", min_width=10, scale=4
             )
 
         with gr.Row(visible=False) as self._delete_confirm:
             self.btn_del_conf = gr.Button(
-                value="Delete",
+                value="Löschen",
                 variant="stop",
                 min_width=10,
             )
@@ -114,8 +114,8 @@ class ConversationControl(BasePage):
 
         with gr.Row():
             self.conversation_rn = gr.Text(
-                label="(Enter) to save",
-                placeholder="Conversation name",
+                label="(Enter) zum Speichern",
+                placeholder="Name der Konversation",
                 container=True,
                 scale=5,
                 min_width=10,
@@ -186,9 +186,9 @@ class ConversationControl(BasePage):
             return gr.update(value=None, choices=[])
 
     def new_conv(self, user_id):
-        """Create new chat"""
+        """Neuer chat"""
         if user_id is None:
-            gr.Warning("Please sign in first (Settings → User Settings)")
+            gr.Warning("Bitte erst anmelden (Einstellungen → Benutzer Einstellungen)")
             return None, gr.update()
         with Session(engine) as session:
             new_conv = Conversation(user=user_id)
@@ -202,13 +202,13 @@ class ConversationControl(BasePage):
         return id_, gr.update(value=id_, choices=history)
 
     def delete_conv(self, conversation_id, user_id):
-        """Delete the selected conversation"""
+        """Markierte Konversation löschen"""
         if not conversation_id:
-            gr.Warning("No conversation selected.")
+            gr.Warning("Keine Konversation ausgewählt.")
             return None, gr.update()
 
         if user_id is None:
-            gr.Warning("Please sign in first (Settings → User Settings)")
+            gr.Warning("Bitte erst anmelden (Einstellungen → Benutzer Einstellungen)")
             return None, gr.update()
 
         with Session(engine) as session:
@@ -226,7 +226,7 @@ class ConversationControl(BasePage):
             return None, gr.update(value=None, choices=[])
 
     def select_conv(self, conversation_id, user_id):
-        """Select the conversation"""
+        """Konversation auswählen"""
         with Session(engine) as session:
             statement = select(Conversation).where(Conversation.id == conversation_id)
             try:
@@ -258,7 +258,7 @@ class ConversationControl(BasePage):
                 info_panel = (
                     retrieval_history[-1]
                     if retrieval_history
-                    else "<h5><b>No evidence found.</b></h5>"
+                    else "<h5><b>Keine Beweise gefunden.</b></h5>"
                 )
                 plot_data = plot_history[-1] if plot_history else None
                 state = result.data_source.get("state", STATE)
@@ -312,11 +312,11 @@ class ConversationControl(BasePage):
             )
 
         if user_id is None:
-            gr.Warning("Please sign in first (Settings → User Settings)")
+            gr.Warning("Bitte erst anmelden (Einstellungen → Benutzer Einstellungen)")
             return gr.update(), ""
 
         if not conversation_id:
-            gr.Warning("No conversation selected.")
+            gr.Warning("Keine Konversation ausgewählt.")
             return gr.update(), ""
 
         errors = is_conv_name_valid(new_name)
@@ -332,7 +332,7 @@ class ConversationControl(BasePage):
             session.commit()
 
         history = self.load_chat_history(user_id)
-        gr.Info("Conversation renamed.")
+        gr.Info("Konversation umbenannt.")
         return (
             gr.update(choices=history),
             conversation_id,
@@ -347,11 +347,11 @@ class ConversationControl(BasePage):
             return
 
         if user_id is None:
-            gr.Warning("Please sign in first (Settings → User Settings)")
+            gr.Warning("Bitte erst anmelden (Einstellungen → Benutzer Einstellungen)")
             return gr.update(), ""
 
         if not conversation_id:
-            gr.Warning("No conversation selected.")
+            gr.Warning("Keine Konversation ausgewählt.")
             return gr.update(), ""
 
         with Session(engine) as session:
@@ -367,7 +367,7 @@ class ConversationControl(BasePage):
             session.add(result)
             session.commit()
 
-        gr.Info("Chat suggestions updated.")
+        gr.Info("Chat Vorschläge aktualisiert.")
 
     def _on_app_created(self):
         """Reload the conversation once the app is created"""

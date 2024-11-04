@@ -90,7 +90,7 @@ class EmbeddingManagement(BasePage):
                     with gr.Column():
                         self.edit_spec_desc = gr.Markdown("# Spec description")
 
-        with gr.Tab(label="Add"):
+        with gr.Tab(label="Hinzufügen"):
             with gr.Row():
                 with gr.Column(scale=2):
                     self.name = gr.Textbox(

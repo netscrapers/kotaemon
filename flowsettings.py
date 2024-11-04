@@ -268,19 +268,19 @@ SETTINGS_APP: dict[str, dict] = {}
 
 SETTINGS_REASONING = {
     "use": {
-        "name": "Reasoning options",
+        "name": "Begründungsoptionen",
         "value": None,
         "choices": [],
         "component": "radio",
     },
     "lang": {
-        "name": "Language",
-        "value": "en",
-        "choices": [("English", "en"), ("Japanese", "ja"), ("Vietnamese", "vi")],
+        "name": "Sprache",
+        "value": "de",
+        "choices": [("Deutsch", "de"),("English", "en"), ("Japanese", "ja"), ("Vietnamese", "vi")],
         "component": "dropdown",
     },
     "max_context_length": {
-        "name": "Max context length (LLM)",
+        "name": "Maximale Kontextgröße (LLM)",
         "value": 32000,
         "component": "number",
     },
@@ -325,7 +325,7 @@ GRAPHRAG_INDEX = (
 
 KH_INDICES = [
     {
-        "name": "File",
+        "name": "Datei",
         "config": {
             "supported_file_types": (
                 ".png, .jpeg, .jpg, .tiff, .tif, .pdf, .xls, .xlsx, .doc, .docx, "

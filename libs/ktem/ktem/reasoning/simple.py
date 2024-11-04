@@ -647,7 +647,7 @@ class FullQAPipeline(BaseReasoning):
         mindmap_output = self.prepare_mindmap(answer)
 
         if not with_citation and not without_citation:
-            yield Document(channel="info", content="<h5><b>No evidence found.</b></h5>")
+            yield Document(channel="info", content="<h5><b>Keine Beweise gefunden.</b></h5>")
         else:
             # clear the Info panel
             max_llm_rerank_score = max(
@@ -939,7 +939,7 @@ class FullDecomposeQAPipeline(FullQAPipeline):
         # show the evidence
         with_citation, without_citation = self.prepare_citations(answer, docs)
         if not with_citation and not without_citation:
-            yield Document(channel="info", content="<h5><b>No evidence found.</b></h5>")
+            yield Document(channel="info", content="<h5><b>Keine Beweise gefunden.</b></h5>")
         else:
             yield Document(channel="info", content=None)
             yield from with_citation

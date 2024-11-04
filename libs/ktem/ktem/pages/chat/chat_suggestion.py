@@ -11,10 +11,10 @@ class ChatSuggestion(BasePage):
     def on_building_ui(self):
         chat_samples = getattr(flowsettings, "KH_FEATURE_CHAT_SUGGESTION_SAMPLES", [])
         chat_samples = [[each] for each in chat_samples]
-        with gr.Accordion(label="Chat Suggestion", open=False) as self.accordion:
+        with gr.Accordion(label="Chat Vorschlag", open=False) as self.accordion:
             self.example = gr.DataFrame(
                 value=chat_samples,
-                headers=["Next Question"],
+                headers=["Nächste Frage"],
                 interactive=False,
                 wrap=True,
             )

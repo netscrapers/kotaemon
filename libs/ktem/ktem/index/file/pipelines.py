@@ -607,13 +607,13 @@ class IndexPipeline(BaseComponent):
             if file_id is not None:
                 if not reindex:
                     raise ValueError(
-                        f"File {file_path.name} already indexed. Please rerun with "
-                        "reindex=True to force reindexing."
+                        f"Datei {file_path.name} ist bereits indiziert. Bitte erneut mit "
+                        "reindex=True ausführen, um das erneute Indizieren zu erzwingen."
                     )
                 else:
                     # remove the existing records
                     yield Document(
-                        f" => Removing old {file_path.name}", channel="debug"
+                        f" => Entferne alte Datei {file_path.name}", channel="debug"
                     )
                     self.delete_file(file_id)
                     file_id = self.store_file(file_path)
@@ -622,7 +622,7 @@ class IndexPipeline(BaseComponent):
                 file_id = self.store_file(file_path)
         else:
             if file_id is not None:
-                raise ValueError(f"URL {file_path} already indexed.")
+                raise ValueError(f"URL {file_path} bereits indiziert.")
             else:
                 # add record to db
                 file_id = self.store_url(file_path)
@@ -638,14 +638,14 @@ class IndexPipeline(BaseComponent):
         extra_info["file_id"] = file_id
         extra_info["collection_name"] = self.collection_name
 
-        yield Document(f" => Converting {file_name} to text", channel="debug")
+        yield Document(f" => Konvertiere Datei {file_name} in Text", channel="debug")
         docs = self.loader.load_data(file_path, extra_info=extra_info)
-        yield Document(f" => Converted {file_name} to text", channel="debug")
+        yield Document(f" => Datei {file_name} fertig in Text konvertiert", channel="debug")
         yield from self.handle_docs(docs, file_id, file_name)
 
         self.finish(file_id, file_path)
 
-        yield Document(f" => Finished indexing {file_name}", channel="debug")
+        yield Document(f" => Indizierung für Datei {file_name} abgeschlossen", channel="debug")
         return file_id, docs
 
 

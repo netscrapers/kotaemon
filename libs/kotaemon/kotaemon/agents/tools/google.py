@@ -37,7 +37,7 @@ class GoogleSearchTool(BaseTool):
                     for item in search_results
                 )
         except HTTPError:
-            output = "No evidence found."
+            output = "Keine Beweise gefunden."
 
         return output
 

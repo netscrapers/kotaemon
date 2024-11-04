@@ -129,10 +129,10 @@ class UserManagement(BasePage):
 
             is_created = create_user(usn, pwd)
             if is_created:
-                gr.Info(f'User "{usn}" created successfully')
+                gr.Info(f'Benutzer "{usn}" erfolgreich angelegt')
 
     def on_building_ui(self):
-        with gr.Tab(label="User list"):
+        with gr.Tab(label="Benutzerliste"):
             self.state_user_list = gr.State(value=None)
             self.user_list = gr.DataFrame(
                 headers=["id", "name", "admin"],
@@ -143,38 +143,38 @@ class UserManagement(BasePage):
                 self.selected_user_id = gr.Number(value=-1, visible=False)
                 self.usn_edit = gr.Textbox(label="Username")
                 with gr.Row():
-                    self.pwd_edit = gr.Textbox(label="Change password", type="password")
+                    self.pwd_edit = gr.Textbox(label="Password ändern", type="password")
                     self.pwd_cnf_edit = gr.Textbox(
-                        label="Confirm change password",
+                        label="Passwordänderung bestätigen",
                         type="password",
                     )
-                self.admin_edit = gr.Checkbox(label="Admin")
+                self.admin_edit = gr.Checkbox(label="Administrator")
 
             with gr.Row(visible=False) as self._selected_panel_btn:
                 with gr.Column():
-                    self.btn_edit_save = gr.Button("Save")
+                    self.btn_edit_save = gr.Button("Speichern")
                 with gr.Column():
-                    self.btn_delete = gr.Button("Delete")
+                    self.btn_delete = gr.Button("Löschen")
                     with gr.Row():
                         self.btn_delete_yes = gr.Button(
                             "Confirm delete", variant="primary", visible=False
                         )
-                        self.btn_delete_no = gr.Button("Cancel", visible=False)
+                        self.btn_delete_no = gr.Button("Abbrechen", visible=False)
                 with gr.Column():
-                    self.btn_close = gr.Button("Close")
+                    self.btn_close = gr.Button("Schließen")
 
         with gr.Tab(label="Create user"):
-            self.usn_new = gr.Textbox(label="Username", interactive=True)
+            self.usn_new = gr.Textbox(label="Benutzername", interactive=True)
             self.pwd_new = gr.Textbox(
-                label="Password", type="password", interactive=True
+                label="Passwort", type="password", interactive=True
             )
             self.pwd_cnf_new = gr.Textbox(
-                label="Confirm password", type="password", interactive=True
+                label="Passwort (Wiederholung)", type="password", interactive=True
             )
             with gr.Row():
                 gr.Markdown(USERNAME_RULE)
                 gr.Markdown(PASSWORD_RULE)
-            self.btn_new = gr.Button("Create user")
+            self.btn_new = gr.Button("Benutzer anlegen")
 
     def on_register_events(self):
         self.btn_new.click(
@@ -297,7 +297,7 @@ class UserManagement(BasePage):
             statement = select(User).where(User.username_lower == usn.lower())
             result = session.exec(statement).all()
             if result:
-                gr.Warning(f'Username "{usn}" already exists')
+                gr.Warning(f'Benutzername "{usn}" existiert bereits')
                 return
 
             hashed_password = hashlib.sha256(pwd.encode()).hexdigest()
@@ -306,7 +306,7 @@ class UserManagement(BasePage):
             )
             session.add(user)
             session.commit()
-            gr.Info(f'User "{usn}" created successfully')
+            gr.Info(f'Benutzer "{usn}" erfolgreich angelegt')
 
         return "", "", ""
 
@@ -340,7 +340,7 @@ class UserManagement(BasePage):
 
     def select_user(self, user_list, ev: gr.SelectData):
         if ev.value == "-" and ev.index[0] == 0:
-            gr.Info("No user is loaded. Please refresh the user list")
+            gr.Info("Kein Benutzer geladen. Bitte Liste aktualisieren")
             return -1
 
         if not ev.selected:
@@ -422,13 +422,13 @@ class UserManagement(BasePage):
             if pwd:
                 user.password = hashlib.sha256(pwd.encode()).hexdigest()
             session.commit()
-            gr.Info(f'User "{usn}" updated successfully')
+            gr.Info(f'Benutzer "{usn}" erfolgreich aktualisiert')
 
         return "", ""
 
     def delete_user(self, current_user, selected_user_id):
         if current_user == selected_user_id:
-            gr.Warning("You cannot delete yourself")
+            gr.Warning("Der eigene Benutzer kann nicht gelöscht werden")
             return selected_user_id
 
         with Session(engine) as session:
@@ -436,5 +436,5 @@ class UserManagement(BasePage):
             user = session.exec(statement).one()
             session.delete(user)
             session.commit()
-            gr.Info(f'User "{user.username}" deleted successfully')
+            gr.Info(f'Benutzer "{user.username}" erfolgreich gelöscht')
         return -1

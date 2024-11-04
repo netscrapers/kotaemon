@@ -101,7 +101,7 @@ class ChatPage(BasePage):
 
                     index_ui.unrender()  # need to rerender later within Accordion
                     with gr.Accordion(
-                        label=f"{index.name} Collection", open=index_id < 1
+                        label=f"{index.name} Sammlung", open=index_id < 1
                     ):
                         index_ui.render()
                         gr_index = index_ui.as_gradio_component()
@@ -122,7 +122,7 @@ class ChatPage(BasePage):
                         setattr(self, f"_index_{index.id}", index_ui)
 
                 if len(self._app.index_manager.indices) > 0:
-                    with gr.Accordion(label="Quick Upload") as _:
+                    with gr.Accordion(label="Schnell Upload") as _:
                         self.quick_file_upload = File(
                             file_types=list(KH_DEFAULT_FILE_EXTRACTORS.keys()),
                             file_count="multiple",
@@ -137,11 +137,11 @@ class ChatPage(BasePage):
                 self.chat_panel = ChatPanel(self._app)
 
                 with gr.Row():
-                    with gr.Accordion(label="Chat settings", open=False):
+                    with gr.Accordion(label="Chat Einstellungen", open=False):
                         # a quick switch for reasoning type option
                         with gr.Row():
-                            gr.HTML("Reasoning method")
-                            gr.HTML("Model")
+                            gr.HTML("Begründungsmethode")
+                            gr.HTML("Modell")
 
                         with gr.Row():
                             reasoning_type_values = [
@@ -169,7 +169,7 @@ class ChatPage(BasePage):
             with gr.Column(
                 scale=INFO_PANEL_SCALES[False], elem_id="chat-info-panel"
             ) as self.info_column:
-                with gr.Accordion(label="Information panel", open=True):
+                with gr.Accordion(label="Informationen", open=True):
                     self.modal = gr.HTML("<div id='pdf-modal'></div>")
                     self.plot_panel = gr.Plot(visible=False)
                     self.info_panel = gr.HTML(elem_id="html-info-panel")
@@ -514,7 +514,7 @@ class ChatPage(BasePage):
     ):
         """Submit a message to the chatbot"""
         if not chat_input:
-            raise ValueError("Input is empty")
+            raise ValueError("Eingabe ist leer")
 
         chat_input_text = chat_input.get("text", "")
 
@@ -523,7 +523,7 @@ class ChatPage(BasePage):
             chat_history = chat_history + [(chat_input_text, None)]
         else:
             if not chat_history:
-                raise gr.Error("Empty chat")
+                raise gr.Error("Leerer Chat")
 
         if not conv_id:
             id_, update = self.chat_control.new_conv(user_id)
@@ -562,7 +562,7 @@ class ChatPage(BasePage):
 
     def on_set_public_conversation(self, is_public, convo_id):
         if not convo_id:
-            gr.Warning("No conversation selected")
+            gr.Warning("Keine Konversation ausgwählt")
             return
 
         with Session(engine) as session:
@@ -579,7 +579,7 @@ class ChatPage(BasePage):
                 session.commit()
 
                 gr.Info(
-                    f"Conversation: {name} is {'public' if is_public else 'private'}."
+                    f"Konversation: {name} ist {'öffentlich' if is_public else 'privat'}."
                 )
 
     def on_subscribe_public_events(self):
@@ -628,7 +628,7 @@ class ChatPage(BasePage):
     ):
         """Update the data source"""
         if not convo_id:
-            gr.Warning("No conversation selected")
+            gr.Warning("Keine Konversation ausgewählt")
             return
 
         # if not regen, then append the new message
@@ -637,7 +637,7 @@ class ChatPage(BasePage):
             plot_history = plot_history + [plot_data]
         else:
             if retrival_history:
-                print("Updating retrieval history (regen=True)")
+                print("Aktualisiere Abruf Historie (regen=True)")
                 retrival_history[-1] = retrieval_msg
                 plot_history[-1] = plot_data
 
@@ -678,7 +678,7 @@ class ChatPage(BasePage):
     def reasoning_changed(self, reasoning_type):
         if reasoning_type != DEFAULT_SETTING:
             # override app settings state (temporary)
-            gr.Info("Reasoning type changed to `{}`".format(reasoning_type))
+            gr.Info("Begründungstyp gewechselt auf `{}`".format(reasoning_type))
         return reasoning_type
 
     def is_liked(self, convo_id, liked: gr.LikeData):

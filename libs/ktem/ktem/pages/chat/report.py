@@ -15,22 +15,22 @@ class ReportIssue(BasePage):
         with gr.Accordion(label="Feedback", open=False):
             self.correctness = gr.Radio(
                 choices=[
-                    ("The answer is correct", "correct"),
-                    ("The answer is incorrect", "incorrect"),
+                    ("Die Antwort ist korrekt", "correct"),
+                    ("Die Antwort ist nicht korrekt", "incorrect"),
                 ],
-                label="Correctness:",
+                label="Korrektheit:",
             )
             self.issues = gr.CheckboxGroup(
                 choices=[
-                    ("The answer is offensive", "offensive"),
-                    ("The evidence is incorrect", "wrong-evidence"),
+                    ("Die Antwort ist beleidigend", "offensive"),
+                    ("Die Beweise sind nicht korrekt", "wrong-evidence"),
                 ],
                 label="Other issue:",
             )
             self.more_detail = gr.Textbox(
                 placeholder=(
-                    "More detail (e.g. how wrong is it, what is the "
-                    "correct answer, etc...)"
+                    "Mehr Details (z.B. wie falsch ist es, was ist die "
+                    "korrekte Antwort, usw...)"
                 ),
                 container=False,
                 lines=3,
@@ -39,7 +39,7 @@ class ReportIssue(BasePage):
                 "This will send the current chat and the user settings to "
                 "help with investigation"
             )
-            self.report_btn = gr.Button("Report")
+            self.report_btn = gr.Button("Feedback abgeben")
 
     def report(
         self,

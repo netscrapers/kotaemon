@@ -11,8 +11,8 @@ class ChatPanel(BasePage):
         self.chatbot = gr.Chatbot(
             label=self._app.app_name,
             placeholder=(
-                "This is the beginning of a new conversation.\nIf you are new, "
-                "visit the Help tab for quick instructions."
+                "Das ist der Anfang einer neuen Konversation.\n"
+                "Klicke den Hilfe Tab für mehr Infos."
             ),
             show_label=False,
             elem_id="main-chat-bot",
@@ -25,7 +25,7 @@ class ChatPanel(BasePage):
                 interactive=True,
                 scale=20,
                 file_count="multiple",
-                placeholder="Chat input",
+                placeholder="Chat Eingabe",
                 container=False,
                 show_label=False,
             )

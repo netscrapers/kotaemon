@@ -369,26 +369,26 @@ class FileIndex(BaseIndex):
 
         return {
             "embedding": {
-                "name": "Embedding model",
+                "name": "Embedding Modell",
                 "value": embedding_default,
                 "component": "dropdown",
                 "choices": embedding_choices,
-                "info": "The name of embedding model to use.",
+                "info": "Der Name des zu nutzenden Embedding Models.",
             },
             "supported_file_types": {
-                "name": "Supported file types",
+                "name": "Unterstützte Dateiformate",
                 "value": ".pdf, .txt",
                 "component": "text",
                 "info": "The file types that can be indexed, separated by comma.",
             },
             "max_file_size": {
-                "name": "Max file size (MB)",
+                "name": "Maximale Dateigröße (MB)",
                 "value": 1000,
                 "component": "number",
                 "info": "The maximum size of file. Set 0 to disable.",
             },
             "max_number_of_files": {
-                "name": "Max number of files that can be indexed",
+                "name": "Maximale Anzahl indizierbarer Dateien",
                 "value": 0,
                 "component": "number",
                 "info": (
@@ -397,11 +397,11 @@ class FileIndex(BaseIndex):
                 ),
             },
             "private": {
-                "name": "Make private",
+                "name": "Privat machen",
                 "value": False,
                 "component": "radio",
                 "choices": [("Yes", True), ("No", False)],
-                "info": "If private, files will not be accessible across users.",
+                "info": "Falls privat, sind Dateien nicht nutzerübergreifend verfügbar.",
             },
         }
 

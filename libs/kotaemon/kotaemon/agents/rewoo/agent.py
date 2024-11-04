@@ -184,7 +184,7 @@ class RewooAgent(BaseAgent):
                 tool_response = selected_plugin(tool_input)
                 result["evidence"] = get_plugin_response_content(tool_response)
             except ValueError:
-                result["evidence"] = "No evidence found."
+                result["evidence"] = "Keine Beweise gefunden."
             finally:
                 output.panel_print(
                     result["evidence"], f"[green] Function Response of [blue]{tool}: "
